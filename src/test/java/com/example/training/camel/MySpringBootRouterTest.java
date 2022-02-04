@@ -13,16 +13,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @CamelSpringBootTest
-public class MySpringBootApplicationTest {
+public class MySpringBootRouterTest {
 
-	@Autowired
+    @Autowired
 	private CamelContext camelContext;
-
+    
 	@Autowired
 	private ProducerTemplate producerTemplate;
 
-	@Test  @Disabled
-	public void test() throws Exception {
+
+    @Test //@Disabled
+    void testConfigure() throws Exception{
 		MockEndpoint mock = camelContext.getEndpoint("mock:stream:out", MockEndpoint.class);
 
 		AdviceWith.adviceWith(camelContext, "hello",
@@ -44,6 +45,5 @@ public class MySpringBootApplicationTest {
 
 		// asserting mock is satisfied
 		mock.assertIsSatisfied();
-	}
-
+    }
 }

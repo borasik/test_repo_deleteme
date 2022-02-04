@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.camel.model.dataformat.JsonDataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +24,12 @@ public class TestProcessor implements Processor{
     @Autowired
     ObjectMapper jackson;
 
+ 
     private static final Logger Log = LoggerFactory.getLogger(TestProcessor.class);
 
-    @Override
+    
     public void process(Exchange exchange) throws Exception {
+     
         //get exchange message body
         String body = exchange.getIn().getBody(String.class);
         if (body == null || body.trim().length()==0)
@@ -39,16 +42,25 @@ public class TestProcessor implements Processor{
         //change firstName
         user.setFirstName("Alex");
         Log.info("Altered user: " + user);
+        
+        
+        String json = jackson.writeValueAsString(user);
+        InputStream targetStream = new ByteArrayInputStream(json.getBytes());
+        exchange.getIn().setBody(targetStream);
+
 
         /**
          * vyudin
          * At this point I'm not sure if there is out of the box serialization method
          * in Camel, so will do it manually for now
         */ 
+        /*
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream out = null;
         InputStream bis = null;
         byte[] userBytes;
+
+        //jackson.writeValue(out, value);
 
         try {
             out = new ObjectOutputStream(bos);   
@@ -68,7 +80,8 @@ public class TestProcessor implements Processor{
         //set message body    
         if(bis!=null )
             exchange.getIn().setBody(bis);
-
+*/
+  
 
         
     }
