@@ -23,6 +23,7 @@ public class MySpringBootApplicationTest {
 
 	@Test  @Disabled
 	public void test() throws Exception {
+
 		MockEndpoint mock = camelContext.getEndpoint("mock:stream:out", MockEndpoint.class);
 
 		AdviceWith.adviceWith(camelContext, "hello",
@@ -36,7 +37,7 @@ public class MySpringBootApplicationTest {
 		);
 
 		// setting expectations
-		mock.expectedMessageCount(1);
+	//	mock.expectedMessageCount(1);
 		mock.expectedBodiesReceived("{\"firstName\":\"Alex\", \"lastName\":\"Yudin\"}");
 
 		// invoking consumer

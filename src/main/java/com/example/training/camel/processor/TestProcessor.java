@@ -40,14 +40,14 @@ public class TestProcessor implements Processor{
         Log.info("Loaded user from file: " + user);
         
         //change firstName
-        user.setFirstName("Alex");
+        user.setFirstName("Alexander");
         Log.info("Altered user: " + user);
         
-        
-        String json = jackson.writeValueAsString(user);
-        InputStream targetStream = new ByteArrayInputStream(json.getBytes());
-        exchange.getIn().setBody(targetStream);
 
+        String json = jackson.writeValueAsString(user);
+        //InputStream targetStream = new ByteArrayInputStream(json.getBytes());
+        //exchange.getIn().setBody(targetStream);
+        exchange.getMessage().setBody(json);
 
         /**
          * vyudin
